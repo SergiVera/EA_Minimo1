@@ -1,0 +1,28 @@
+table{
+  width: 100%;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+i.icon-blue {
+  color: blue;
+}
+
+i.icon-red {
+  color: red;
+}
+
+.addUser {
+  text-align: center;
+}

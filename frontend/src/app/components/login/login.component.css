@@ -1,0 +1,142 @@
+body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background: url('../../resources/background-login.jpg') no-repeat top center;
+}
+
+form {
+  width: 35em;
+  margin: 2em auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px;
+  opacity: 1;
+  background-color: rgba(255,255,255, 100);
+  box-shadow: 0 0 1.5em #000;
+  box-sizing: border-box;
+}
+
+div.heading {
+  background: #f88f4d;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 1.5em;
+  font-family: "Al Bayan", serif;
+  font-size: 20px;
+}
+
+div.left {
+  width: 50%;
+  float: left;
+  padding: 1.7em 1.5em 2.5em 1.5em;
+}
+
+input[type="text"], input[type="password"] {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-radius: 30px;
+}
+
+.alert {
+  border-radius: 30px;
+  text-align: center;
+}
+
+.login {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: royalblue;
+  border-radius: 30px;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.register {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: royalblue;
+  border-radius: 30px;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+label {
+  width: 0;
+  margin-top: 20%;
+  position: relative;
+  font-weight: bold;
+  font-family: "Al Bayan", serif;
+  font-size: 20px;
+}
+
+div.right {
+  width: 50%;
+  float: right;
+  padding: 1.7em 1.5em 2.5em 2.5em;
+}
+
+.signinwith {
+  color: black;
+  font-family: "Al Bayan", serif;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+input[type="submit"] {
+  background: #f85f64;
+  color: #fff;
+  outline: none;
+  text-transform: uppercase;
+  padding: 1.2em;
+  overflow: hidden;
+  border: none;
+  letter-spacing: 0.1em;
+  margin: 0.5em 0;
+  font-weight: bold;
+}
+
+a {
+  display: inline-block;
+  font-size: 1.5em;
+  text-decoration: none;
+  color: white;
+  width: 9em;
+  padding: 0.55em 0.3em;
+  clear: both;
+  text-align: center;
+  margin: 0.5em 0.1em;
+  border-radius: 30px;
+}
+
+a.facebook {
+  background: #3a589a;
+  margin-top: 0.8em;
+}
+
+a.twitter {
+  background: #4099ff;
+}
+
+
+
+

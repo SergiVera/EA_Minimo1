@@ -1,0 +1,28 @@
+<h2>Users List CookinEA</h2>
+<table class="table">
+  <thead class="thead-dark">
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Operations</th>
+  </thead>
+  <tbody>
+      <tr *ngFor="let user of users; let i=index">
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phone}}</td>
+        <td>
+          <a (click)="updateUser(user._id)">
+            <i class="material-icons icon-blue">edit</i>
+          </a>
+          <a (click)="deleteUser(user._id, i)">
+            <i class="material-icons icon-red">delete</i>
+          </a>
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<div class="addUser">
+  <button mat-raised-button color="primary" type="submit" (click)="registerNewUser()">Add new one</button>
+</div>

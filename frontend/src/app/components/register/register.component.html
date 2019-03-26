@@ -1,0 +1,299 @@
+<h2>CookinEA</h2>
+<!--When we want to register-->
+<div *ngIf="user._id === ''">
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="form-group">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="name" placeholder="name" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.name">
+          <div class="alert alert-danger" *ngIf="registerForm.get('name').hasError(validation.type) && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="surname" placeholder="surname" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.surname">
+          <div class="alert alert-danger" *ngIf="registerForm.get('surname').hasError(validation.type) && (registerForm.get('surname').dirty || registerForm.get('surname').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">person</i>
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="username" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.username">
+          <div class="alert alert-danger" *ngIf="registerForm.get('username').hasError(validation.type) && (registerForm.get('username').dirty || registerForm.get('username').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">email</i>
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="email" placeholder="email" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="alert alert-danger" *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">lock</i>
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">lock</i>
+      <mat-form-field>
+        <input matInput formControlName="confirmPassword" placeholder="Confirm your password" [type]="hide ? 'password' : 'text'" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.confirmPassword">
+          <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError(validation.type) && (registerForm.get('confirmPassword').dirty || registerForm.get('confirmPassword').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <mat-radio-group class="example-radio-group" formControlName="gender">
+        <mat-radio-button class="example-radio-button" *ngFor="let genders of gender" [value]="genders" required>
+          {{genders}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">cake</i>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <ng-container *ngFor="let validation of validation_messages.birthday">
+        <div class="alert alert-danger" *ngIf="registerForm.get('birthday').hasError(validation.type) && (registerForm.get('birthday').dirty || registerForm.get('birthday').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+        <i class="material-icons">thumb_up_alt</i>
+        <ng-multiselect-dropdown name="interests" [placeholder]="'Select Interests'" [data]="interests" formControlName="interests" [disabled]="disabled" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="deSelectAll($event)" required>
+        </ng-multiselect-dropdown>
+        <ng-container *ngFor="let validation of validation_messages.interests">
+          <div class="alert alert-danger" *ngIf="registerForm.get('interests').hasError(validation.type) && (registerForm.get('interests').dirty || registerForm.get('interests').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-icon matSuffix>phone</mat-icon>
+        <input matInput formControlName="phone" placeholder="phone" required/>
+      </mat-form-field>
+        <ng-container *ngFor="let validation of validation_messages.phone">
+          <div class="alert alert-danger" *ngIf="registerForm.get('phone').hasError(validation.type) && (registerForm.get('phone').dirty || registerForm.get('phone').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+    </div>
+    <div class="form-group">
+      <div data-type="virtual-form-table-row" data-colspan="40">
+        <div data-type="textarea" data-colspan="40" data-label-is-bold="1">
+          <label data-role="label">About Me</label>
+          <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="0">
+            <textarea data-role="i123-input" aria-labelledby="textarea-0000000f-acc textarea-0000000f-error-acc textarea-0000000f-instr-acc" rows="4" data-size="full" formControlName="aboutme" maxlength="150" #message></textarea>
+          </div>
+          <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="hidden">
+        <div class="alert alert-danger" [hidden]="!error">Internal server error</div>
+    </div>
+    <div class="form-group">
+      <div class="example-button-row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+        <button mat-raised-button color="secondary" (click)="cancel()" style="margin-left: 25px">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--When we want to update the user-->
+<div *ngIf="user._id !== ''">
+  <form [formGroup]="registerForm" (ngSubmit)="updateUser()">
+    <div class="form-group">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="name" placeholder="name"  [(ngModel)]="user.name" required>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.name">
+          <div class="alert alert-danger" *ngIf="registerForm.get('name').hasError(validation.type) && registerForm.get('name').dirty">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="surname" placeholder="surname" [(ngModel)]="user.surname" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.surname">
+          <div class="alert alert-danger" *ngIf="registerForm.get('surname').hasError(validation.type) && registerForm.get('surname').dirty">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">person</i>
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="username" [(ngModel)]="user.username" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.username">
+          <div class="alert alert-danger" *ngIf="registerForm.get('username').hasError(validation.type) && registerForm.get('username').dirty">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">email</i>
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="email" placeholder="email" [(ngModel)]="user.email" required/>
+        </mat-form-field>
+      </div>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="alert alert-danger" *ngIf="registerForm.get('email').hasError(validation.type) && registerForm.get('email').dirty">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">lock</i>
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" [(ngModel)]="user.password" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError(validation.type) && registerForm.get('password').dirty">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <mat-radio-group class="example-radio-group" formControlName="gender" [(ngModel)]="user.gender">
+        <mat-radio-button class="example-radio-button" *ngFor="let genders of gender" [value]="genders" required>
+          {{genders}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">cake</i>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday" [(ngModel)]="user.birthday" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <ng-container *ngFor="let validation of validation_messages.birthday">
+        <div class="alert alert-danger" *ngIf="registerForm.get('birthday').hasError(validation.type) && registerForm.get('birthday').dirty">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <i class="material-icons">thumb_up_alt</i>
+      <ng-multiselect-dropdown name="interests" [placeholder]="'Select Interests'"  [(ngModel)]="user.interests" [data]="interests" formControlName="interests" [disabled]="disabled" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="deSelectAll($event)" (onDeSelect)="onItemDeselect($event)"  required>
+      </ng-multiselect-dropdown>
+      <ng-container *ngFor="let validation of validation_messages.interests">
+        <div class="alert alert-danger" *ngIf="registerForm.get('interests').hasError(validation.type) && registerForm.get('interests').dirty">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-icon matSuffix>phone</mat-icon>
+        <input matInput formControlName="phone" placeholder="phone" [(ngModel)]="user.phone" required/>
+      </mat-form-field>
+      <ng-container *ngFor="let validation of validation_messages.phone">
+        <div class="alert alert-danger" *ngIf="registerForm.get('phone').hasError(validation.type) && registerForm.get('phone').dirty">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <div data-type="virtual-form-table-row" data-colspan="40">
+        <div data-type="textarea" data-colspan="40" data-label-is-bold="1">
+          <label data-role="label">About Me</label>
+          <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="0">
+            <textarea data-role="i123-input" aria-labelledby="textarea-0000000f-acc textarea-0000000f-error-acc textarea-0000000f-instr-acc" rows="4" data-size="full" formControlName="aboutme" maxlength="150" #message [(ngModel)]="user.aboutme"></textarea>
+          </div>
+          <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="example-button-row">
+          <button mat-raised-button color="primary" type="submit">Update</button>
+          <button mat-raised-button color="secondary" (click)="cancel()" style="margin-left: 100px">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
