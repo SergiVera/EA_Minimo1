@@ -1,21 +1,49 @@
-# CookinEA
+# Minimo1
 
-We are the second group of Enginyeria d’Aplicacions, composed by Marc Belmonte, Rubèn Cobos, Laia Muñoz and Sergi Vera. We are pleased to present our project at the end of the semester.
+Students and Subjects CRUD using MEAN stack.
 
 ---
 
 ### Table of Contents
 
-- [Description](#description)
+- [Models](#models)
 - [How To Use](#how-to-use)
 - [License](#license)
 - [Author Info](#author-info)
 
-## Description
+## Models
 
-First of all, we are offering a connection point between people who are interested in cooking and other one who simply wants to buy prepared meals and give suggestions to other users recipes to improve them. On the second hand, we are also offering our users to sell different recipes for those who want to learn by their own.
+#####Student schema
 
-To provide this service, our web is going to have a profile, where the users can add their favourite meals, a chat, to put in contact the seller and the buyer, the possibility to search different type of food (italian, chinese…) depending on the users tastes by using tags. Our users are going to be able to add pictures of the dishes to keep everything simple and visual. In addition, we will give the change to look for near users based on their geolocation.
+```javascript
+const StudentSchema = new Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    name: { type: String, required: true },
+    address: { type: String, required: true },
+    phones: { type: [Object], required: true }
+});
+```
+
+#####Subject schema
+
+```javascript
+const SubjectSchema = new Schema ({
+    _id: mongoose.Schema.Types.ObjectId,
+    name: { type: String, required: true, unique: true },
+    student: { type: [mongoose.Schema.Types.ObjectId], ref: 'Student' }
+});
+```
+
+#####Routes
+
+| Model | Type | Routes | Description |
+| --- | --- | --- | --- |
+| SUBJECT | GET | /subjects | Get all Subjects |
+|  | GET | /subjects/:subjectId | Get the detail of a subject |
+|  | POST | /subjects/adduser | Add Student into a subject |
+|  | POST | /subjects | Add a new subject |
+| STUDENT | POST | /student | Add a new student |
+
 
 #### Technologies
 
@@ -94,11 +122,5 @@ SOFTWARE.
 ---
 
 ## Author Info
-
-Marc Belmonte
-
-Ruben Cobos
-
-Laia Muñoz
 
 Sergi Vera

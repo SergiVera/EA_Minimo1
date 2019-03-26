@@ -23,7 +23,7 @@ app.use(BodyParser.urlencoded({ extended: false}))
 //Permitir peticiones con formato de mensaje JSON
 app.use(BodyParser.json())
 
-app.use('', api)
+app.use('/api', api)
 
 //Renderizar login
 app.get('/login', (req, res) => {

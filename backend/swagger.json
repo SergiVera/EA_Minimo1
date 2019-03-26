@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "CRUD of users in CookinEA",
-    "description": "CRUD User",
+    "title": "CRUD of students Minimo1",
+    "description": "CRUD Students",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -13,8 +13,12 @@
   "basePath": "/api",
   "tags": [
     {
-      "name": "Users",
-      "description": "Basic CRUD of users"
+      "name": "Students",
+      "description": "Students"
+    },
+    {
+      "name": "Subjects",
+      "description": "Subjects"
     }
   ],
   "schemes": [
@@ -27,19 +31,19 @@
     "application/json"
   ],
   "paths": {
-    "/users": {
+    "/students": {
       "post": {
         "tags": [
-          "Users"
+          "Students"
         ],
-        "description": "Create new user in system",
+        "description": "Add new Student",
         "parameters": [
           {
-            "name": "user",
+            "name": "Student",
             "in": "body",
-            "description": "User that we want to create",
+            "description": "Student that you want to add",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Student"
             }
           }
         ],
@@ -50,165 +54,169 @@
           "200": {
             "description": "User created successfully"
           },
-          "409": {
-            "description": "Fields has to be unique"
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/subjects": {
+      "post": {
+        "tags": [
+          "Subjects"
+        ],
+        "description": "Add new Subject",
+        "parameters": [
+          {
+            "name": "Subject",
+            "in": "body",
+            "description": "Subject that you want to add",
+            "schema": {
+              "$ref": "#/definitions/Subject"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Subject created successfully"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
       "get": {
         "tags": [
-          "Users"
+          "Subjects"
         ],
-        "summary": "Get all users in system",
+        "summary": "Get all subjects",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Subjects"
             }
           },
           "500": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Users"
-            }
+            "description": "Internal server error"
           }
         }
       }
     },
-    "/users/{userId}": {
+    "/subjects/adduser": {
+      "post": {
+        "tags": [
+          "Subjects"
+        ],
+        "description": "Add student into a subject",
+        "parameters": [
+          {
+            "name": "identifiers",
+            "in": "body",
+            "description": "Id of the Student and the Subject",
+            "schema": {
+              "$ref": "#/definitions/AddUserIntoSubject"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "404": {
+            "description": "Student or Subject not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/subjects/{subjectId}": {
       "parameters": [
         {
-          "name": "userId",
+          "name": "subjectId",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "ID of the subject that you want to see the details",
           "type": "string"
         }
       ],
       "get": {
         "tags": [
-          "Users"
+          "Subjects"
         ],
-        "summary": "Get user with given ID",
+        "summary": "See the subject detail",
         "responses": {
           "200": {
-            "description": "User is found",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete user with given ID",
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "User is deleted"
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "500": {
-            "description": "Database Error"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update user with give ID",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "User with new values of properties",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User is updated",
-            "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Subject"
             }
           },
           "404": {
-            "description": "User not found"
-          },
-          "409": {
-            "description": "Fields has to be unique"
+            "description": "Subject not found"
           },
           "500": {
-            "description": "Database Error"
+            "description": "Internal server error"
           }
         }
       }
     }
   },
   "definitions": {
-    "User": {
+    "Student": {
       "required": [
         "name",
-        "surname",
-        "username",
-        "email",
-        "password",
-        "interests",
-        "gender",
-        "phone",
-        "aboutme",
-        "birthday"
+        "address",
+        "phones"
       ],
       "properties": {
         "name": {
           "type": "string"
         },
-        "surname": {
+        "address": {
           "type": "string"
         },
-        "username": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "email": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "password": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "interests": {
+        "phones": {
           "type": "array",
           "items": {
-            "type": "string",
+            "type": "object",
             "uniqueItems": true
           }
-        },
-        "gender": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "number"
-        },
-        "aboutme": {
-          "type": "string"
-        },
-        "birthday": {
+        }
+      }
+    },
+    "Subject": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
           "type": "string"
         }
       }
     },
-    "Users": {
+    "Subjects": {
       "type": "array",
-      "$ref": "#/definitions/User"
+      "$ref": "#/definitions/Subject"
+    },
+    "AddUserIntoSubject": {
+      "required": [
+        "subjectId",
+        "studentId"
+      ],
+      "properties": {
+        "subjectId": {
+          "type": "string"
+        },
+        "studentId": {
+          "type": "string"
+        }
+      }
     }
   }
 }
