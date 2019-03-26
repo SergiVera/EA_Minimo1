@@ -13,7 +13,7 @@ Students and Subjects CRUD using MEAN stack.
 
 ## Models
 
-#####Student schema
+##### Student schema
 
 ```javascript
 const StudentSchema = new Schema({
@@ -24,7 +24,7 @@ const StudentSchema = new Schema({
 });
 ```
 
-#####Subject schema
+##### Subject schema
 
 ```javascript
 const SubjectSchema = new Schema ({
@@ -34,7 +34,7 @@ const SubjectSchema = new Schema ({
 });
 ```
 
-#####Routes
+##### Routes
 
 | Model | Type | Routes | Description |
 | --- | --- | --- | --- |
