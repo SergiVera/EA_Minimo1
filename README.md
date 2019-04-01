@@ -17,10 +17,13 @@ Students and Subjects CRUD using MEAN stack.
 
 ```javascript
 const StudentSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
     address: { type: String, required: true },
-    phones: { type: [Object], required: true }
+    phones: [{
+        id: String,
+        value: String,
+        _id : false
+    }]
 });
 ```
 
@@ -28,9 +31,8 @@ const StudentSchema = new Schema({
 
 ```javascript
 const SubjectSchema = new Schema ({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true, unique: true },
-    student: { type: [mongoose.Schema.Types.ObjectId], ref: 'Student' }
+    students: [{ type: Schema.ObjectId, ref: 'Student', unique: false }]
 });
 ```
 

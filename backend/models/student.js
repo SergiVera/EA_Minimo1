@@ -5,10 +5,13 @@ const Schema = mongoose.Schema;
  * Definition of Student schema
  */
 const StudentSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
     address: { type: String, required: true },
-    phones: { type: [Object], required: true }
+    phones: [{
+        id: String,
+        value: String,
+        _id : false
+    }]
 });
 
 /**

@@ -1,17 +1,18 @@
-'user strict';
+'use strict';
 
 const mongoose = require('mongoose');
 const Student = require('../models/student');
+const Subject = require('../models/subject');
 
 /**
- * Add student to Students collection
+ * Add student from Students collection
  * @param req
  * @param res
  * @returns {Promise<void>}
  */
 async function postStudent(req, res) {
     const student = new Student(req.body);
-    student._id = new mongoose.Types.ObjectId();
+    console.log(req.body.phones);
 
     console.log(student);
 
@@ -24,6 +25,67 @@ async function postStudent(req, res) {
     }
 }
 
-module.exports = {
-    postStudent
+/**
+ * Delete student from Students collection
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function deleteStudent(req, res) {
+    try {
+        const _id = mongoose.Types.ObjectId(req.params.studentId);
+
+        let student = await Student.findOneAndDelete(_id);
+        if(!student){
+            return res.status(404).send({message: 'Student not found'})
+        }else{
+            await Subject.update({}, {$pull: {students: _id}}, {multi: true});
+
+            res.status(200).send({message:'Student deleted successfully'});
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
 }
+
+/**
+ * Update the specified Student from Students collection
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function updateStudent(req, res) {
+    try{
+        const _id = req.params.studentId;
+        let student = await Student.findByIdAndUpdate(_id, req.body, {runValidators: true});
+        if(!student){
+            return res.status(404).send({message: 'Student not found'})
+        }else{
+            res.status(200).send(student)
+        }
+    }catch(err){
+        if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(409).send({err: err.message, code: err.code})
+        }
+        res.status(500).send(err)
+    }
+}
+
+async function getStudents(req, res) {
+    try {
+        let students = await Student.find();
+        res.status(200).send(students);
+    } catch(err) {
+        res.status(500).send(err)
+    }
+}
+
+/**
+ * Export the functions to use them anywhere
+ * @type {{updateStudent: updateStudent, postStudent: postStudent, deleteStudent: deleteStudent}}
+ */
+module.exports = {
+    postStudent,
+    deleteStudent,
+    updateStudent
+};

@@ -8,21 +8,15 @@ const api = express.Router();
 /**
  * Routes restful API
  */
-api.get('/subjects', subjectCtrl.getSubjects);
-api.post('/subjects/adduser', subjectCtrl.postUserSubject);
+api.get('/subjects', subjectCtrl    .getSubjects);
+api.post('/subjects/addstudent', subjectCtrl.postStudentSubject);
 api.post('/subjects', subjectCtrl.postSubject);
 api.get('/subjects/:subjectId', subjectCtrl.getSubjectDetail);
-api.post('/students', studentCtrl.postStudent);
+api.get('/subjects/:subjectId/studentdetail', subjectCtrl.getStudentSubjectDetail);
 
-/*api.put('/product/:productId', auth, dishCtrl.updateDish)
-api.delete('/product/:productId', auth, dishCtrl.deleteDish)
-api.post('/users/signup',userCtrl.signUp)
-api.post('/users/signin', userCtrl.signIn)
-api.get('/users',userCtrl.getUsers)
-api.delete('/users/:userId', userCtrl.deleteUser)
-api.put('/users/:userId', userCtrl.updateUser)
-api.get('/private', auth, (req, res) => {
-    res.status(200).send({ message: 'Tienes acceso' })
-})*/
+api.post('/students', studentCtrl.postStudent);
+api.delete('/students/:studentId', studentCtrl.deleteStudent);
+api.put('/students/:studentId', studentCtrl.updateStudent);
+
 
 module.exports = api;

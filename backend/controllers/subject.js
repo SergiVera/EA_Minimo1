@@ -1,6 +1,5 @@
-'user strict';
+'use strict';
 
-const mongoose = require('mongoose');
 const Student = require('../models/student');
 const Subject = require('../models/subject');
 
@@ -12,7 +11,6 @@ const Subject = require('../models/subject');
  */
 async function postSubject(req, res) {
     const subject = new Subject();
-    subject._id = new mongoose.Types.ObjectId();
     subject.name = req.body.name;
 
     console.log(subject);
@@ -34,8 +32,8 @@ async function postSubject(req, res) {
  */
 async function getSubjects(req, res) {
     try {
-        let users = await Subject.find();
-        res.status(200).send(users);
+        let subjects = await Subject.find().select({students: 0});
+        res.status(200).send(subjects);
     } catch(err) {
         res.status(500).send(err)
     }
@@ -51,7 +49,9 @@ async function getSubjectDetail(req, res) {
     try {
         const _id = req.params.subjectId;
 
-        let subject = await Subject.findById(_id);
+        //We use populate to return the detail of every student, but only the name
+        //Populates automatically find every student that has the specified ID, instead of doing by us
+        let subject = await Subject.findById(_id).populate('students', 'name');
         if(!subject){
             return res.status(404).send({message: 'Subject not found'})
         }else{
@@ -68,7 +68,7 @@ async function getSubjectDetail(req, res) {
  * @param res
  * @returns {Promise<void>}
  */
-async function postUserSubject(req, res) {
+async function postStudentSubject(req, res) {
     try{
         const subjectId = req.body.subjectId;
         const studentId = req.body.studentId;
@@ -80,7 +80,7 @@ async function postUserSubject(req, res) {
         if (!studentFound) {
             return res.status(404).send({message: 'Student not found'})
         } else {
-            let subjectUpdated = await Subject.findOneAndUpdate({_id: subjectId}, {$addToSet: {student: studentId}});
+            let subjectUpdated = await Subject.findOneAndUpdate({_id: subjectId}, {$addToSet: {students: studentId}});
             if (!subjectUpdated) {
                 return res.status(404).send({message: 'Subject not found'})
             }
@@ -94,9 +94,37 @@ async function postUserSubject(req, res) {
     }
 }
 
+/**
+ * Get the details of the students of a specific subject
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function getStudentSubjectDetail(req, res) {
+    try {
+        const _id = req.params.subjectId;
+
+        //We use populate to return the detail of every student
+        //Populates automatically find every student that has the specified ID, instead of doing by us
+        let subject = await Subject.findById(_id).populate('students');
+        if(!subject){
+            return res.status(404).send({message: 'Subject not found'})
+        }else{
+            res.status(200).send(subject)
+        }
+    } catch(err) {
+        res.status(500).send(err)
+    }
+}
+
+/**
+ * Export all the functions to use them anywhere
+ * @type {{getSubjectDetail: getSubjectDetail, postSubject: postSubject, postStudentSubject: postStudentSubject, getSubjects: getSubjects, getStudentSubjectDetail: getStudentSubjectDetail}}
+ */
 module.exports = {
     postSubject,
     getSubjects,
     getSubjectDetail,
-    postUserSubject
-}
+    postStudentSubject,
+    getStudentSubjectDetail
+};

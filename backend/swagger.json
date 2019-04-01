@@ -10,15 +10,13 @@
     }
   },
   "host": "localhost:3001",
-  "basePath": "/api",
+  "basePath": "/",
   "tags": [
     {
-      "name": "Students",
-      "description": "Students"
+      "name": "Students"
     },
     {
-      "name": "Subjects",
-      "description": "Subjects"
+      "name": "Subjects"
     }
   ],
   "schemes": [
@@ -53,6 +51,64 @@
         "responses": {
           "200": {
             "description": "User created successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/students/{studentId}": {
+      "parameters": [
+        {
+          "name": "studentId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the student",
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Students"
+        ],
+        "summary": "Delete Student",
+        "responses": {
+          "200": {
+            "description": "Student is deleted"
+          },
+          "404": {
+            "description": "Student not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Students"
+        ],
+        "summary": "Update Student",
+        "parameters": [
+          {
+            "name": "Student",
+            "in": "body",
+            "description": "Student with new values",
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Student is updated",
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+          },
+          "404": {
+            "description": "Student not found"
           },
           "500": {
             "description": "Internal server error"
@@ -106,7 +162,7 @@
         }
       }
     },
-    "/subjects/adduser": {
+    "/subjects/addstudent": {
       "post": {
         "tags": [
           "Subjects"
@@ -141,7 +197,7 @@
           "name": "subjectId",
           "in": "path",
           "required": true,
-          "description": "ID of the subject that you want to see the details",
+          "description": "ID of the subject",
           "type": "string"
         }
       ],
@@ -150,6 +206,37 @@
           "Subjects"
         ],
         "summary": "See the subject detail",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Subject"
+            }
+          },
+          "404": {
+            "description": "Subject not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/subjects/{subjectId}/studentdetail": {
+      "parameters": [
+        {
+          "name": "subjectId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the subject",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Subjects"
+        ],
+        "summary": "See the student detail of a subject",
         "responses": {
           "200": {
             "description": "OK",
