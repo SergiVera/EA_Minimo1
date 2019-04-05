@@ -118,13 +118,34 @@ async function getStudentSubjectDetail(req, res) {
 }
 
 /**
+ * Delete a subject given its ID
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function deleteSubject(req, res) {
+    try{
+        const _id = req.params.subjectId;
+        let subject = await Subject.findByIdAndRemove(_id);
+        if(!subject){
+            return res.status(404).send({message: 'Subject not found'})
+        }else{
+            res.status(200).send({message:'Subject deleted successfully'})
+        }
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
+
+/**
  * Export all the functions to use them anywhere
- * @type {{getSubjectDetail: getSubjectDetail, postSubject: postSubject, postStudentSubject: postStudentSubject, getSubjects: getSubjects, getStudentSubjectDetail: getStudentSubjectDetail}}
+ * @type {{getSubjectDetail: getSubjectDetail, postSubject: postSubject, deleteSubject: deleteSubject, postStudentSubject: postStudentSubject, getSubjects: getSubjects, getStudentSubjectDetail: getStudentSubjectDetail}}
  */
 module.exports = {
     postSubject,
     getSubjects,
     getSubjectDetail,
     postStudentSubject,
-    getStudentSubjectDetail
+    getStudentSubjectDetail,
+    deleteSubject
 };

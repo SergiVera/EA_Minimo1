@@ -39,13 +39,21 @@ const SubjectSchema = new Schema ({
 ##### Routes
 
 | Model | Type | Routes | Description |
-| --- | --- | --- | --- |
+| :---:| :---: | --- | --- |
 | SUBJECT | GET | /subjects | Get all Subjects |
-|  | GET | /subjects/:subjectId | Get the detail of a subject |
+|  | GET | /subjects/**:subjectId** | Get the detail of a subject |
+|  | GET | /subjects/**:subjectId**/studentdetail | Get the student detail of a subject |
 |  | POST | /subjects/adduser | Add Student into a subject |
 |  | POST | /subjects | Add a new subject |
-| STUDENT | POST | /student | Add a new student |
+|  | DELETE | /subjects/**:subjectId** | Delete Subject |
+| STUDENT | GET | /students | Get all Students |
+|  | POST | /students | Add a new student |
+|  | DELETE | /students/**:studentId** | Delete Student |
+|  | PUT | /students/**:studentId** | Update Student
 
+##### Swagger
+
+![Captura de pantalla 2019-04-05 a las 12 29 23](https://user-images.githubusercontent.com/43316590/55621663-71f76a00-579e-11e9-9153-77ed8ecf39f7.png)
 
 #### Technologies
 

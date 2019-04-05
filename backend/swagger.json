@@ -56,6 +56,23 @@
             "description": "Internal server error"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Students"
+        ],
+        "summary": "Get all students",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Students"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
       }
     },
     "/students/{studentId}": {
@@ -210,8 +227,25 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Subject"
+              "$ref": "#/definitions/SubjectDetail"
             }
+          },
+          "404": {
+            "description": "Subject not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subjects"
+        ],
+        "summary": "Delete Subject",
+        "responses": {
+          "200": {
+            "description": "Subject is deleted"
           },
           "404": {
             "description": "Subject not found"
@@ -241,7 +275,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Subject"
+              "$ref": "#/definitions/StudentSubjectDetail"
             }
           },
           "404": {
@@ -272,10 +306,21 @@
           "type": "array",
           "items": {
             "type": "object",
-            "uniqueItems": true
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
           }
         }
       }
+    },
+    "Students": {
+      "type": "array",
+      "$ref": "#/definitions/Student"
     },
     "Subject": {
       "required": [
@@ -302,6 +347,36 @@
         },
         "studentId": {
           "type": "string"
+        }
+      }
+    },
+    "SubjectDetail": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "students": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "StudentSubjectDetail": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "students": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Student"
+          }
         }
       }
     }

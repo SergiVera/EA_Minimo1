@@ -82,10 +82,11 @@ async function getStudents(req, res) {
 
 /**
  * Export the functions to use them anywhere
- * @type {{updateStudent: updateStudent, postStudent: postStudent, deleteStudent: deleteStudent}}
+ * @type {{getStudents: getStudents, updateStudent: updateStudent, postStudent: postStudent, deleteStudent: deleteStudent}}
  */
 module.exports = {
     postStudent,
     deleteStudent,
-    updateStudent
+    updateStudent,
+    getStudents
 };

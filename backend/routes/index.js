@@ -13,7 +13,9 @@ api.post('/subjects/addstudent', subjectCtrl.postStudentSubject);
 api.post('/subjects', subjectCtrl.postSubject);
 api.get('/subjects/:subjectId', subjectCtrl.getSubjectDetail);
 api.get('/subjects/:subjectId/studentdetail', subjectCtrl.getStudentSubjectDetail);
+api.delete('/subjects/:subjectId', subjectCtrl.deleteSubject);
 
+api.get('/students', studentCtrl.getStudents);
 api.post('/students', studentCtrl.postStudent);
 api.delete('/students/:studentId', studentCtrl.deleteStudent);
 api.put('/students/:studentId', studentCtrl.updateStudent);
