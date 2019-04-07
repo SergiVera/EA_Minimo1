@@ -13,26 +13,25 @@ Students and Subjects CRUD using MEAN stack.
 
 ## Models
 
-##### Student schema
+##### StudentService schema
 
 ```javascript
 const StudentSchema = new Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
     phones: [{
-        id: String,
-        value: String,
-        _id : false
+        key: String,
+        value: String
     }]
 });
 ```
 
-##### Subject schema
+##### SubjectService schema
 
 ```javascript
 const SubjectSchema = new Schema ({
     name: { type: String, required: true, unique: true },
-    students: [{ type: Schema.ObjectId, ref: 'Student', unique: false }]
+    students: [{ type: Schema.ObjectId, ref: 'StudentService', unique: false }]
 });
 ```
 
@@ -43,13 +42,13 @@ const SubjectSchema = new Schema ({
 | SUBJECT | GET | /subjects | Get all Subjects |
 |  | GET | /subjects/**:subjectId** | Get the detail of a subject |
 |  | GET | /subjects/**:subjectId**/studentdetail | Get the student detail of a subject |
-|  | POST | /subjects/adduser | Add Student into a subject |
+|  | POST | /subjects/adduser | Add StudentService into a subject |
 |  | POST | /subjects | Add a new subject |
-|  | DELETE | /subjects/**:subjectId** | Delete Subject |
+|  | DELETE | /subjects/**:subjectId** | Delete SubjectService |
 | STUDENT | GET | /students | Get all Students |
 |  | POST | /students | Add a new student |
-|  | DELETE | /students/**:studentId** | Delete Student |
-|  | PUT | /students/**:studentId** | Update Student
+|  | DELETE | /students/**:studentId** | Delete StudentService |
+|  | PUT | /students/**:studentId** | Update StudentService
 
 ##### Swagger
 

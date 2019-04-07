@@ -10,27 +10,22 @@ import { MatInputModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from "@angular/material";
-import {MatTableModule} from "@angular/material";
+import { MatNativeDateModule } from '@angular/material';
+import {MatTableModule} from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './components/products/products.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { InterceptorService } from "./services/interceptor.service";
-import { ProductdetailComponent } from './components/productdetail/productdetail.component';
+import { SubjectdetailComponent } from './components/subjectdetail/subjectdetail.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AddstudentComponent } from './components/addstudent/addstudent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductsComponent,
-    LoginComponent,
-    RegisterComponent,
-    ProductdetailComponent,
-    DashboardComponent
+    SubjectdetailComponent,
+    DashboardComponent,
+    AddstudentComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +45,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatTableModule,
     MatProgressSpinnerModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {

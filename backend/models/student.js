@@ -8,9 +8,8 @@ const StudentSchema = new Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
     phones: [{
-        id: String,
-        value: String,
-        _id : false
+        key: String,
+        value: String
     }]
 });
 

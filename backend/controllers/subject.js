@@ -4,20 +4,20 @@ const Student = require('../models/student');
 const Subject = require('../models/subject');
 
 /**
- * Add new Subject to the subject collection
+ * Add new SubjectService to the subject collection
  * @param req
  * @param res
  * @returns {Promise<void>}
  */
 async function postSubject(req, res) {
+    console.log('Subject Name', req.body.name);
     const subject = new Subject();
     subject.name = req.body.name;
-
     console.log(subject);
 
     try {
         await subject.save();
-        res.status(200).send({message: "Subject created successfully"})
+        res.status(200).send({message: "SubjectService created successfully"})
     } catch (err) {
         res.status(500).send(err);
         console.log(err);
@@ -53,7 +53,7 @@ async function getSubjectDetail(req, res) {
         //Populates automatically find every student that has the specified ID, instead of doing by us
         let subject = await Subject.findById(_id).populate('students', 'name');
         if(!subject){
-            return res.status(404).send({message: 'Subject not found'})
+            return res.status(404).send({message: 'SubjectService not found'})
         }else{
             res.status(200).send(subject)
         }
@@ -78,14 +78,14 @@ async function postStudentSubject(req, res) {
         let studentFound = await Student.findById(studentId);
 
         if (!studentFound) {
-            return res.status(404).send({message: 'Student not found'})
+            return res.status(404).send({message: 'StudentService not found'})
         } else {
             let subjectUpdated = await Subject.findOneAndUpdate({_id: subjectId}, {$addToSet: {students: studentId}});
             if (!subjectUpdated) {
-                return res.status(404).send({message: 'Subject not found'})
+                return res.status(404).send({message: 'SubjectService not found'})
             }
         }
-        res.status(200).send({message: "Student added successfully to the subject"})
+        res.status(200).send({message: "StudentService added successfully to the subject"})
     } catch(err) {
         if (err.name === 'MongoError' && err.code === 11000) {
             res.status(409).send({err: err.message, code: err.code})
@@ -108,7 +108,7 @@ async function getStudentSubjectDetail(req, res) {
         //Populates automatically find every student that has the specified ID, instead of doing by us
         let subject = await Subject.findById(_id).populate('students');
         if(!subject){
-            return res.status(404).send({message: 'Subject not found'})
+            return res.status(404).send({message: 'SubjectService not found'})
         }else{
             res.status(200).send(subject)
         }
@@ -128,9 +128,9 @@ async function deleteSubject(req, res) {
         const _id = req.params.subjectId;
         let subject = await Subject.findByIdAndRemove(_id);
         if(!subject){
-            return res.status(404).send({message: 'Subject not found'})
+            return res.status(404).send({message: 'SubjectService not found'})
         }else{
-            res.status(200).send({message:'Subject deleted successfully'})
+            res.status(200).send({message:'SubjectService deleted successfully'})
         }
     }catch(err){
         res.status(500).send(err)

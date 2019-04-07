@@ -307,7 +307,7 @@
           "items": {
             "type": "object",
             "properties": {
-              "id": {
+              "key": {
                 "type": "string"
               },
               "value": {

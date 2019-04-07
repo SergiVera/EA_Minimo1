@@ -11,14 +11,17 @@ const Subject = require('../models/subject');
  * @returns {Promise<void>}
  */
 async function postStudent(req, res) {
-    const student = new Student(req.body);
+    const student = new Student();
+    student.name = req.body.name;
+    student.address = req.body.address;
+    student.phones = req.body.phones;
     console.log(req.body.phones);
 
     console.log(student);
 
     try {
         await student.save();
-        res.status(200).send({message: "Student created successfully"})
+        res.status(200).send({message: "StudentService created successfully"})
     } catch (err) {
         res.status(500).send(err);
         console.log(err);
@@ -33,15 +36,17 @@ async function postStudent(req, res) {
  */
 async function deleteStudent(req, res) {
     try {
-        const _id = mongoose.Types.ObjectId(req.params.studentId);
+        const _id = req.params.studentId;
 
-        let student = await Student.findOneAndDelete(_id);
+        let student = await Student.findByIdAndDelete(_id);
         if(!student){
-            return res.status(404).send({message: 'Student not found'})
+            return res.status(404).send({message: 'StudentService not found'})
         }else{
+            mongoose.Types.ObjectId(_id);
+
             await Subject.update({}, {$pull: {students: _id}}, {multi: true});
 
-            res.status(200).send({message:'Student deleted successfully'});
+            res.status(200).send({message:'StudentService deleted successfully'});
         }
     } catch (err) {
         res.status(500).send(err);
@@ -49,7 +54,7 @@ async function deleteStudent(req, res) {
 }
 
 /**
- * Update the specified Student from Students collection
+ * Update the specified StudentService from Students collection
  * @param req
  * @param res
  * @returns {Promise<*>}
@@ -59,7 +64,7 @@ async function updateStudent(req, res) {
         const _id = req.params.studentId;
         let student = await Student.findByIdAndUpdate(_id, req.body, {runValidators: true});
         if(!student){
-            return res.status(404).send({message: 'Student not found'})
+            return res.status(404).send({message: 'StudentService not found'})
         }else{
             res.status(200).send(student)
         }

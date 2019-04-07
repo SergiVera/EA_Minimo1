@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 /**
- * Definition of Subject schema, containing the student id
+ * Definition of SubjectService schema, containing the student id
  */
 const SubjectSchema = new Schema ({
     name: { type: String, required: true, unique: true },
@@ -10,7 +10,7 @@ const SubjectSchema = new Schema ({
 });
 
 /**
- * Export the Subject schema
+ * Export the SubjectService schema
  * @type {Model}
  */
 module.exports = mongoose.model('Subject', SubjectSchema);

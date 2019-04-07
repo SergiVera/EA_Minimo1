@@ -1,5 +1,11 @@
-table{
-  width: 100%;
+.title{
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+input {
+  text-align: center;
 }
 
 th {
@@ -23,6 +29,17 @@ i.icon-red {
   color: red;
 }
 
-.addUser {
+.add {
+  position: relative;
   text-align: center;
 }
+
+#addStudent {
+  margin-left: 300px;
+}
+
+#addSubject {
+  margin-left: 120px;
+}
+
+
