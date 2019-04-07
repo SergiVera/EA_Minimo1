@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
   }
 
   subjectDetail(id: string) {
-    this.subjectService.getStudentSubjectDetail(id)
+    this.subjectService.getSubjectDetail(id)
       .subscribe( res => {
           console.log(res);
           this.singleSubject = res as Subject;
