@@ -18,6 +18,10 @@ export class StudentService {
     return this.http.get(this.environment.urlStudent);
   }
 
+  getSingleStudent(id: string) {
+    return this.http.get(this.environment.urlStudent + `/${id}`);
+  }
+
   postStudent(student: Student) {
     return this.http.post(this.environment.urlStudent, student);
   }

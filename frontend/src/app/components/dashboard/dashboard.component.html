@@ -13,7 +13,7 @@
         <tbody>
         <tr *ngFor="let subject of subjects; let i=index">
           <td>
-            <input type="checkbox" class="form-check-input" (click)="assignSubjectId(subject._id)">
+            <mat-radio-button (click)="assignSubjectId(subject._id)"></mat-radio-button>
           </td>
           <td>{{subject.name}}</td>
           <td>
@@ -51,8 +51,11 @@
           <td>{{student.phones[1].key}}</td>
           <td>{{student.phones[1].value}}</td>
           <td>
-            <a (click)="addStudentSubject(student._id)">
+            <a data-toggle="modal" data-target="#warningSubject" (click)="addStudentSubject(student._id)">
               <i class="material-icons icon-blue">add_circle</i>
+            </a>
+            <a (click)="updateStudent(student._id)">
+              <i class="material-icons">update</i>
             </a>
             <a (click)="deleteStudent(student._id, i)">
               <i class="material-icons icon-red">delete</i>
@@ -77,13 +80,24 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="example-container">
-          <input type="text" id="subjectName" placeholder="Subject Name" required [(ngModel)]="subjectName"/>
-        </div>
+        <form [formGroup]="subjectForm">
+          <div class="form-group">
+            <div class="example-container">
+              <input type="text" id="subjectName" formControlName="name" placeholder="Subject Name" [(ngModel)]="subjectName"/>
+            </div>
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="alert alert-danger" *ngIf="subjectForm.get('name').hasError(validation.type) && (subjectForm.get('name').dirty || subjectForm.get('name').touched)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addNewSubject()">Save changes</button>
+        <button type="button" class="btn btn-primary" [disabled]="!subjectForm.valid" (click)="addNewSubject()" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
@@ -106,6 +120,28 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Warning when any subject is selected-->
+<div *ngIf="idSelectedSubject === ''">
+  <div class="modal fade" id="warningSubject" tabindex="-1" role="dialog" aria-labelledby="warningSubjectLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="warningSubjectLabel" style="color: red">Warning!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>A subject must be selected before adding a student into a subject</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
       </div>
     </div>
   </div>

@@ -10,10 +10,8 @@ import {Subject} from '../models/subject';
 export class SubjectService {
 
   environment: Environment;
-  selectedStudent: Student;
 
   constructor(private http: HttpClient) {
-    this.selectedStudent = new Student();
     this.environment = new Environment();
   }
 
@@ -35,6 +33,10 @@ export class SubjectService {
 
   postStudentSubject(ids: object) {
     return this.http.post(this.environment.urlSubject + '/addstudent', ids);
+  }
+
+  deleteStudentSubject(ids: object) {
+    return this.http.put(this.environment.urlSubject + '/deletestudent', ids);
   }
 
   deleteSubject(id: string) {

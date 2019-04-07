@@ -1,26 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from "@angular/router";
-import {StudentService} from "../../services/student.service";
+import {Phone} from '../../models/phone';
+import {StudentService} from '../../services/student.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Student} from '../../models/student';
 import {HttpErrorResponse} from "@angular/common/http";
-import {Student} from "../../models/student";
-import {Phone} from "../../models/phone";
 
 @Component({
-  selector: 'app-addstudent',
-  templateUrl: './addstudent.component.html',
-  styleUrls: ['./addstudent.component.css']
+  selector: 'app-updatestudent',
+  templateUrl: './updatestudent.component.html',
+  styleUrls: ['./updatestudent.component.css']
 })
-export class AddstudentComponent implements OnInit {
+
+export class UpdatestudentComponent implements OnInit {
 
   studentForm: FormGroup;
 
   validation_messages: any;
 
+  student: Student;
+
   phones: Phone[];
 
-  constructor(private studentService: StudentService, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private studentService: StudentService, private router: Router,
+              private formBuilder: FormBuilder, private activatedRouter: ActivatedRoute) {
 
+    this.student = new Student();
     this.phones = [];
 
     this.studentForm = this.formBuilder.group({
@@ -39,7 +44,6 @@ export class AddstudentComponent implements OnInit {
         Validators.required,
         Validators.pattern(/\(?([0-9]{2})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)]))
     });
-
   }
 
   ngOnInit() {
@@ -61,39 +65,39 @@ export class AddstudentComponent implements OnInit {
         { type: 'pattern', message: 'Number must be valid' },
       ]
     };
+
+    this.activatedRouter.params.subscribe(params => {
+      if (typeof params.id !== 'undefined') {
+        this.student._id = params.id;
+      } else {
+        this.student._id = '';
+      }
+    });
+    this.getStudent(this.student._id);
   }
 
-  addStudent() {
-    const student = new Student();
-    this.phones.push({
-      key: 'work',
-      value: this.studentForm.value.phoneWork
-    });
-    this.phones.push({
-      key: 'home',
-      value: this.studentForm.value.phoneHome
-    })
-    student.name = this.studentForm.value.name;
-    student.address = this.studentForm.value.address;
-    student.phones = this.phones;
-    console.log(this.phones);
-    console.log(student);
-    this.studentService.postStudent(student)
-      .subscribe(
-        res => {
-          console.log(res);
-          this.router.navigateByUrl('/dashboard');
-        },
-        err => {
-          console.log(err);
-          this.handleError(err);
-        });
+  getStudent(id: string) {
+    this.studentService.getSingleStudent(id)
+      .subscribe(res => {
+        console.log(res);
+        this.student = res as Student;
+      });
+    console.log(this.student);
+  }
+
+  updateStudent() {
+    this.studentService.putStudent(this.student)
+      .subscribe(res => {
+        console.log(res);
+        this.router.navigateByUrl('/dashboard');
+      }, err => {
+        this.handleError(err);
+      });
   }
 
   private handleError(err: HttpErrorResponse) {
     if ( err.status === 500 ) {
-      this.studentForm.get('phoneWork').setErrors({error: true});
+      this.studentForm.get('phoneHome').setErrors({error: true});
     }
   }
-
 }

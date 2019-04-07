@@ -19,13 +19,15 @@ import { AppComponent } from './app.component';
 import { SubjectdetailComponent } from './components/subjectdetail/subjectdetail.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddstudentComponent } from './components/addstudent/addstudent.component';
+import { UpdatestudentComponent } from './components/updatestudent/updatestudent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SubjectdetailComponent,
     DashboardComponent,
-    AddstudentComponent
+    AddstudentComponent,
+    UpdatestudentComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,7 @@ async function postStudent(req, res) {
 
     try {
         await student.save();
-        res.status(200).send({message: "StudentService created successfully"})
+        res.status(200).send({message: "Student created successfully"})
     } catch (err) {
         res.status(500).send(err);
         console.log(err);
@@ -40,13 +40,13 @@ async function deleteStudent(req, res) {
 
         let student = await Student.findByIdAndDelete(_id);
         if(!student){
-            return res.status(404).send({message: 'StudentService not found'})
+            return res.status(404).send({message: 'Student not found'})
         }else{
             mongoose.Types.ObjectId(_id);
 
             await Subject.update({}, {$pull: {students: _id}}, {multi: true});
 
-            res.status(200).send({message:'StudentService deleted successfully'});
+            res.status(200).send({message:'Student deleted successfully'});
         }
     } catch (err) {
         res.status(500).send(err);
@@ -64,7 +64,7 @@ async function updateStudent(req, res) {
         const _id = req.params.studentId;
         let student = await Student.findByIdAndUpdate(_id, req.body, {runValidators: true});
         if(!student){
-            return res.status(404).send({message: 'StudentService not found'})
+            return res.status(404).send({message: 'Student not found'})
         }else{
             res.status(200).send(student)
         }
@@ -76,6 +76,12 @@ async function updateStudent(req, res) {
     }
 }
 
+/**
+ * Get all students
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 async function getStudents(req, res) {
     try {
         let students = await Student.find();
@@ -86,12 +92,34 @@ async function getStudents(req, res) {
 }
 
 /**
- * Export the functions to use them anywhere
- * @type {{getStudents: getStudents, updateStudent: updateStudent, postStudent: postStudent, deleteStudent: deleteStudent}}
+ * Get student by its ID
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function getSingleStudent(req, res) {
+    try {
+        const studentId = req.params.studentId;
+
+        let student = await Student.findById(studentId);
+        if(!student){
+            return res.status(404).send({message: 'Student not found'})
+        }else{
+            res.status(200).send(student)
+        }
+    } catch(err) {
+        res.status(500).send(err)
+    }
+}
+
+/**
+ * Export all the functions to use them anywhere
+ * @type {{getStudents: getStudents, updateStudent: updateStudent, postStudent: postStudent, deleteStudent: deleteStudent, getSingleStudent: getSingleStudent}}
  */
 module.exports = {
     postStudent,
     deleteStudent,
     updateStudent,
-    getStudents
+    getStudents,
+    getSingleStudent
 };

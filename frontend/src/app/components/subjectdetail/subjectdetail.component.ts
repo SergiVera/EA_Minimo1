@@ -11,6 +11,7 @@ import {Subject} from '../../models/subject';
 export class SubjectdetailComponent implements OnInit {
 
   subjectStudentDetail: Subject;
+  body: object;
 
   constructor(private activatedRouter: ActivatedRoute, private subjectService: SubjectService) {
     this.subjectStudentDetail = new Subject();
@@ -35,4 +36,20 @@ export class SubjectdetailComponent implements OnInit {
       });
     console.log(this.subjectStudentDetail);
   }
+
+  deleteStudentSubject(id: string, i: number) {
+    this.body = {
+      subjectId: this.subjectStudentDetail._id,
+      studentId: id
+    };
+    if (confirm('Are yo sure you want to delete it?')) {
+      this.subjectService.deleteStudentSubject(this.body)
+        .subscribe(res => {
+            this.subjectStudentDetail.students.splice(i, 1);
+          },
+          err => {
+            console.log(err);
+          });
+      }
+    }
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {StudentService} from '../../services/student.service';
 import {Subject} from '../../models/subject';
 import {Router} from '@angular/router';
 import {SubjectService} from '../../services/subject.service';
 import {Student} from '../../models/student';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -23,15 +25,34 @@ export class DashboardComponent implements OnInit {
   idSelectedSubject: string;
   body: object;
   subjectName: string;
+  subjectForm: FormGroup;
+  validation_messages: any;
+
 
   constructor(private studentService: StudentService, private router: Router,
-              private subjectService: SubjectService) {
+              private subjectService: SubjectService, private formBuilder: FormBuilder) {
+
     this.singleSubject = new Subject();
+
+    this.subjectForm = this.formBuilder.group({
+      name: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern(/^[A-Z]{1,20}$/)]))
+    });
   }
 
   ngOnInit() {
     this.getSubjects();
     this.getStudents();
+    this.idSelectedSubject = '';
+
+    this.validation_messages = {
+      name: [
+        { type: 'required', message: 'Name is required' },
+        { type: 'pattern', message: 'Name must be in capital letter and have between 1 and 20 characters' },
+        { type: 'error', message: 'Subject Name must be unique' }
+      ]
+    };
   }
 
   deleteSubject(id: string, i: number) {
@@ -102,19 +123,22 @@ export class DashboardComponent implements OnInit {
   }
 
   addStudentSubject(id: string) {
-    this.body = {
-      subjectId: this.idSelectedSubject,
-      studentId: id
-    };
-    console.log(this.body);
-    this.subjectService.postStudentSubject(this.body)
-      .subscribe( res => {
-          console.log(res);
-          confirm('Added successfully');
-        },
-        err => {
-          console.log(err);
-        });
+    // Only call the service if a Subject is selected
+    if (this.idSelectedSubject !== '') {
+      this.body = {
+        subjectId: this.idSelectedSubject,
+        studentId: id
+      };
+      console.log(this.body);
+      this.subjectService.postStudentSubject(this.body)
+        .subscribe( res => {
+            console.log(res);
+            confirm('Added successfully');
+          },
+          err => {
+            console.log(err);
+          });
+    }
   }
 
   addNewSubject() {
@@ -129,11 +153,21 @@ export class DashboardComponent implements OnInit {
         },
         err => {
           console.log(err);
-          confirm('Name must be unique');
+          this.handleError(err);
         });
+  }
+
+  updateStudent(id: string) {
+    this.router.navigate(['/updatestudent', id]);
   }
 
   addNewStudent() {
     this.router.navigateByUrl('/addstudent');
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    if ( err.status === 500 ) {
+      this.subjectForm.get('name').setErrors({error: true});
+    }
   }
 }
